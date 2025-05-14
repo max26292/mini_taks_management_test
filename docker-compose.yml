@@ -1,0 +1,24 @@
+
+services:            
+  app:
+    image: max26292/local-nginx-fpm:8.2
+    container_name: ${COMPOSE_PROJECT_NAME}.app
+    volumes:
+      - ./mini_task_manager:/var/www/html
+      # - ./conf/workers.conf:/etc/supervisor/conf.d/workers.conf // no need on that project
+      - ./conf/nginx.conf.template:/etc/nginx/templates/nginx.conf.template
+    ports:
+      - 8080:80
+      # - 6001:6001
+    environment:
+      # - OPENSSL_CONF=/usr/lib/ssl/openssl_legacy.cnf
+      - PHP_VER=8.2
+    networks:
+      - app-network
+networks:
+  app-network:
+    name: workspace-network
+    external: true
+# volumes:
+#   tus-file:
+#     driver: local
