@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{% block title %}Login!{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex align-items-center py-4 bg-body-tertiary">
+        <main class="form-signin w-100 m-auto text-start">
+{#            <div {{ stimulus_controller('hello') }}>#}
+{#                <input {{ stimulus_target('hello', 'name') }}/>#}
+{#                <button {{ stimulus_action('hello', 'greet', 'click') }}>Hello</button>#}
+{#                <div {{ stimulus_target('hello', 'output') }}></div>#}
+{#            </div>#}
+            {{ form(form) }}
+{#            {{ form_start(form) }}#}
+{#            {{ form_row(form.email, {#}
+{#                label: 'Email',#}
+{#                row_attr: {#}
+{#                    class: 'form-item mb-3'#}
+{#                }#}
+{#            }) }}#}
+{#            {{ form_row(form.password, {#}
+{#                label: 'Password',#}
+{#                row_attr: {#}
+{#                    class: 'form-item'#}
+{#                }#}
+{#            }) }}#}
+{#            {{ form_end(form) }}#}
+
+        </main>
+    </div>
+{% endblock %}
