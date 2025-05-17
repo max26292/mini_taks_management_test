@@ -44,4 +44,10 @@ final class AuthController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/logout', name: 'auth_logout',methods: ['POST'])]
+    public function logout(Security $security): Response
+    {
+        $security->logout(false);
+        return $this->redirectToRoute('auth_login');
+    }
 }

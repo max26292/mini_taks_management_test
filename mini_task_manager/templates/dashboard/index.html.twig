@@ -10,10 +10,12 @@
 
             <div class="container-fluid">
                 <div class="card">
-                    <div class="card-header">
-                        Tasks
+                    <div class="card-header d-flex">
+                       <h3 class="me-auto">
+                           Tasks
 
-                        <button type="button" class="btn btn-primary" {{ stimulus_action('task', 'showNewModal', 'click') }}>
+                       </h3>
+                        <button type="button" class="btn btn-outline-primary btn-sm" {{ stimulus_action('task', 'showNewModal', 'click') }}>
                             Create Task
                         </button>
 
