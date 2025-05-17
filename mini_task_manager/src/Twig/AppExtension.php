@@ -24,6 +24,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFilter('getTasksByStatus', [TaskFilter::class, 'getTasksByStatus']),
+            new TwigFilter('slugify', [$this, 'slugify']),
         ];
     }
 
@@ -39,5 +40,9 @@ class AppExtension extends AbstractExtension
             ];
         }
         return null;
+    }
+    public function slugify($string)
+    {
+        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string), '-'));
     }
 }

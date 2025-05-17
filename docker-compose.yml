@@ -18,11 +18,16 @@ services:
   mercure: 
     image: dunglas/mercure
     environment: 
-      - MERCURE_PUBLISHER_JWT_KEY=minitask
-      - MERCURE_SUBSCRIBER_JWT_KEY=minitask
+      - SERVER_NAME=:80
+      - MERCURE_PUBLISHER_JWT_KEY=832f297dc618b01d3c382a9b2f34de04
+      - MERCURE_SUBSCRIBER_JWT_KEY=832f297dc618b01d3c382a9b2f34de04
+    # command: /usr/bin/caddy run --config /etc/caddy/dev.Caddyfile
     ports:
       - 8880:80
       - 8844:443
+    volumes:
+      - mercure_data:/data
+      - mercure_config:/config
 
 networks:
   app-network:
@@ -31,3 +36,6 @@ networks:
 # volumes:
 #   tus-file:
 #     driver: local
+volumes:
+  mercure_data:
+  mercure_config:

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Task;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -28,5 +29,19 @@ class TaskRepository extends ServiceEntityRepository
         }
 
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @param User $user
+     * @param array $data
+     * @return Task
+     */
+    public function create(User $user, Task $task): Task
+    {
+        $task->setUserId($user);
+        $task->setCreatedAt(new \DateTimeImmutable()) ;
+        $this->getEntityManager()->persist($task);
+        $this->getEntityManager()->flush();
+        return $task;
     }
 }

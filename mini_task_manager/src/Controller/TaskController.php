@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\TaskNewTaskForm;
 use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,30 @@ final class TaskController extends AbstractController
         return $this->render('dashboard/components/task-column.html.twig', [
             'status' => $taskType,
             'tasks' => $tasks,
+        ]);
+    }
+    #[Route('/new',name:'store')]
+    public function store(Request $request,TaskRepository $repository)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $form = $this->createForm(TaskNewTaskForm::class, null, [
+            'action' => $this->generateUrl('tasks.store'),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $task = $repository->create($user,$form->getData());
+            //dd($request->getPreferredFormat());
+            //$request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+            //return;
+            return $this->redirectToRoute('app_dashboard');
+            // save...
+
+            // do something
+        }
+        return $this->render('task/new.html.twig', [
+            'form' => $form,
         ]);
     }
 }

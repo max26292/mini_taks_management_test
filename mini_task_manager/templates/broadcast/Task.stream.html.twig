@@ -1,0 +1,17 @@
+{% block create %}
+    <turbo-stream action="prepend" targets="tasks_{{ entity.status|slugify }}">
+        <template>
+            <div class="card my-3">
+                <div class="card-header">
+                    {{ entity.title }}
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        {{ entity.description }}
+                        <footer class="blockquote-footer">Created At {{ entity.createdAt|date('Y-m-d H:i:s') }}</footer>
+                    </blockquote>
+                </div>
+            </div>
+        </template>
+    </turbo-stream>
+{% endblock %}

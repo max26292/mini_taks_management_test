@@ -5,32 +5,61 @@
 
 {% endblock %}
 {% block body %}
-<div class="content-page">
-    <div class="container-fluid">
-        <div class="card">
-            <div class="card-header">
-                Tasks
-            </div>
-            <div class="card-body">
-                <div class="row gx-3">
-                    <div class="col-md-3 ">
-                        <turbo-frame id="BackLog" src="{{ path('tasks.list_tasks') }}" loading="lazy">
-                        </turbo-frame>
-                    </div>
-                    <div class="col-md-3 ">
-                        <turbo-frame id="In Process" src="{{ path('tasks.list_tasks') }}" loading="lazy">
-                        </turbo-frame>
-                    </div>
-                    <div class="col-md-3 ">
-                        <turbo-frame id="Done" src="{{ path('tasks.list_tasks') }}" loading="lazy">
-                        </turbo-frame>
-                    </div>
+    <div {{ stimulus_controller('task') }}>
+        <div class="content-page">
 
-                    {#                  {{ include('dashboard/components/task-column.html.twig', {tasks: tasks | getTasksByStatus('BackLog'),status: 'BackLog'}) }} #}
-                    {#                  {{ include('dashboard/components/task-column.html.twig', {tasks: tasks | getTasksByStatus('In Process'),status: 'In Process'}) }} #}
-                    {#                  {{ include('dashboard/components/task-column.html.twig', {tasks: tasks | getTasksByStatus('Done'),status: 'Done'}) }} #}
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-header">
+                        Tasks
+
+                        <button type="button" class="btn btn-primary" {{ stimulus_action('task', 'showNewModal', 'click') }}>
+                            Create Task
+                        </button>
+
+
+                    </div>
+                    <div class="card-body">
+                        <div class="row gx-3">
+                            <div class="col-md-3 ">
+                                <turbo-frame id="BackLog" src="{{ path('tasks.list_tasks') }}" loading="lazy">
+                                </turbo-frame>
+                            </div>
+                            <div class="col-md-3 ">
+                                <turbo-frame id="In Process" src="{{ path('tasks.list_tasks') }}" loading="lazy">
+                                </turbo-frame>
+                            </div>
+                            <div class="col-md-3 ">
+                                <turbo-frame id="Done" src="{{ path('tasks.list_tasks') }}" loading="lazy">
+                                </turbo-frame>
+                            </div>
+
+                            {#                  {{ include('dashboard/components/task-column.html.twig', {tasks: tasks | getTasksByStatus('BackLog'),status: 'BackLog'}) }} #}
+                            {#                  {{ include('dashboard/components/task-column.html.twig', {tasks: tasks | getTasksByStatus('In Process'),status: 'In Process'}) }} #}
+                            {#                  {{ include('dashboard/components/task-column.html.twig', {tasks: tasks | getTasksByStatus('Done'),status: 'Done'}) }} #}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="newModal" tabindex="-1" aria-hidden="true " {{ stimulus_target('task', 'newModal') }}>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <turbo-frame id="new-task" src="{{ path('tasks.store') }}" loading="lazy">
+                        </turbo-frame>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" {{ stimulus_action('task', 'closeNewModal', 'click') }}>Close</button>
+                        <button type="button" class="btn btn-primary" {{ stimulus_action('task', 'submitNewModal','click') }}>Save changes</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-    {% endblock %}
+{% endblock %}
