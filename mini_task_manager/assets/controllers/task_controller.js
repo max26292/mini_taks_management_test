@@ -1,4 +1,4 @@
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 import {Modal} from 'bootstrap';
 /*
  * This is an example Stimulus controller!
@@ -13,19 +13,20 @@ export default class extends Controller {
     modal
 
     connect() {
-        console.log('connect')
-        const modal = this.newModalTarget
-        this.modal =  new Modal(modal)
+        this.modal = new Modal( this.newModalTarget)
+        this.editModal = new Modal(this.editModalTarget)
         // this.element.textContent = 'Hello Stimulus! Edit me in assets/controllers/hello_controller.js';
     }
-    static targets = [ "newModal", "newTaskForm" ]
+
+    static targets = ["newModal", "newTaskForm", 'editModal','editTaskForm']
 
     showNewModal() {
-       this.modal.show()
+        this.modal.show()
         // const name = element.value
         // this.outputTarget.textContent = `Hello, ${name}!`
     }
-    closeNewModal () {
+
+    closeNewModal() {
         this.modal.hide()
     }
 
@@ -35,11 +36,21 @@ export default class extends Controller {
     }
 
     deleteTask(event) {
-        console.log(event.target.parentNode)
         if (confirm('Are you sure you want to delete this task?')) {
             event.target.parentNode.requestSubmit()
 
         }
     }
 
+    showEditModal(event) {
+        event.target.parentNode.requestSubmit()
+        this.editModal.show()
+    }
+    closeEditModal() {
+        this.editModal.hide()
+    }
+    submitEditModal() {
+        this.editTaskFormTarget.requestSubmit()
+        this.editModal.hide()
+    }
 }

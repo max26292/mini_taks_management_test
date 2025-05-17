@@ -3,7 +3,33 @@
         <template>
             <div class="card my-3">
                 <div class="card-header">
-                    {{ task.title }}
+                    <div class="d-flex">
+                        <div class="me-auto">
+                            {{ task.title }}
+                        </div>
+                        <div class="d-flex btn-group " role="group">
+                            <turbo-frame id="delete_task">
+                                <form action="{{ url('tasks.delete', { id: task.id }) }}" method="post">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    {# the argument of csrf_token() is an arbitrary string used to generate the token #}
+                                    <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}">
+
+                                    <button type="button" class="btn btn-outline-danger btn-sm me-1" data-id="{{ task.id }}" {{ stimulus_action('task','deleteTask') }}>delete
+                                    </button>
+                                </form>
+                            </turbo-frame>
+                            <turbo-frame id="edit_tasks">
+                                <form action="{{ url('tasks.show', { id: task.id }) }}" method="post">
+                                    {# the argument of csrf_token() is an arbitrary string used to generate the token #}
+                                    <input type="hidden" name="token" value="{{ csrf_token('edit-item') }}">
+
+                                    <button type="button" class="btn btn-outline-primary btn-sm" data-id="{{ task.id }}" {{ stimulus_action('task','showEditModal') }}>
+                                        edit
+                                    </button>
+                                </form>
+                            </turbo-frame>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">

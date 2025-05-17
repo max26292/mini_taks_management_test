@@ -22,7 +22,7 @@ class TaskNewTaskForm extends AbstractType
             ])
             ->add('description',TextareaType::class)
             ->add('status',ChoiceType::class, [
-                'choices' => TaskStatus::array(),
+                'choices' => TaskStatus::getOptions(),
             ])
         ;
     }

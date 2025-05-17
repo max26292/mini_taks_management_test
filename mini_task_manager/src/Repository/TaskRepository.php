@@ -55,4 +55,13 @@ class TaskRepository extends ServiceEntityRepository
         }
        return false;
     }
+
+    public function update(Task $old, Task $task): Task
+    {
+        $old->setTitle($task->getTitle());
+        $old->setDescription($task->getDescription());
+        $old->setStatus($task->getStatus());
+        $this->getEntityManager()->flush();
+        return $task;
+    }
 }

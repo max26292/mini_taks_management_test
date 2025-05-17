@@ -27,8 +27,9 @@ final class TaskController extends AbstractController
             'tasks' => $tasks,
         ]);
     }
-    #[Route('/new',name:'store')]
-    public function store(Request $request,TaskRepository $repository)
+
+    #[Route('/new', name: 'store')]
+    public function store(Request $request, TaskRepository $repository)
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -39,7 +40,7 @@ final class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $task = $repository->create($user,$form->getData());
+            $task = $repository->create($user, $form->getData());
             if (TurboBundle::STREAM_FORMAT === $request->getPreferredFormat()) {
                 $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
 
@@ -60,13 +61,60 @@ final class TaskController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('/{id}', name: 'delete')]
-    public function delete($id, Request  $request,TaskRepository $repository){
+
+    #[Route('/{id}/delete', name: 'delete', methods: ['POST'])]
+    public function delete($id, Request $request, TaskRepository $repository)
+    {
         $repository->delete($id);
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
 
         return $this->renderBlock('task/components/deleted_task.html.twig', 'success_stream', [
             'id' => $id,
         ]);
+    }
+
+    #[Route('/{id}', name: 'show', methods: ['POST'])]
+    public function show($id, Request $request, TaskRepository $repository)
+    {
+        $task = $repository->find($id);
+        $form = $this->createForm(TaskNewTaskForm::class, $task, [
+            'action' => $this->generateUrl('tasks.show', ['id' => $id]),
+        ]);
+        $emptyForm = clone $form;
+        $form->handleRequest($request);
+
+        $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $task = $repository->update($task,$form->getData());
+            if (TurboBundle::STREAM_FORMAT === $request->getPreferredFormat()) {
+                $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+
+                return $this->renderBlock('task/components/edited_task.html.twig', 'success_stream', [
+                    'task' => $task,
+                ]);
+            }
+            //$request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+            //return;
+            return $this->redirectToRoute('app_dashboard', [], Response::HTTP_SEE_OTHER);
+            // save...
+
+            // do something
+        }
+        return $this->renderBlock('task/components/edit_task.html.twig', 'success_stream', [
+            'task' => $task,
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'edit', methods: ['POST'])]
+    public function edit($id, Request $request, TaskRepository $repository)
+    {
+        $task = $repository->find($id);
+
+        dd($task, $request->request->all());
+        //return $this->renderBlock('task/components/edit_task.html.twig', 'success_stream', [
+        //    'task' => $task,
+        //
+        //]);
     }
 }

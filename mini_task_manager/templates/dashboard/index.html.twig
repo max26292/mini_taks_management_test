@@ -43,11 +43,11 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="newModal" tabindex="-1" aria-hidden="true " {{ stimulus_target('task', 'newModal') }}>
+        <div class="modal fade show" id="newModal" tabindex="-1" aria-hidden="true " {{ stimulus_target('task', 'newModal') }}>
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
+                        <h5 class="modal-title">create Tasks</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" >
@@ -63,7 +63,26 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="modal fade show" id="editModal" tabindex="-1" aria-hidden="true " {{ stimulus_target('task', 'editModal') }}>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">edit Tasks</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" >
+                        <div id="edit-task-body">
 
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" {{ stimulus_action('task', 'closeEditModal', 'click') }}>Close</button>
+                        <button type="button" class="btn btn-primary" {{ stimulus_action('task', 'submitEditModal','click') }}>Save changes</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

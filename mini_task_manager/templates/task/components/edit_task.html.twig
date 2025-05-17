@@ -1,0 +1,11 @@
+{% block success_stream %}
+    <turbo-stream action="replace" targets="#edit-task-body">
+        <template>
+           <div id="edit-task-body">
+               {{ form_start(form,{attr: stimulus_target('task', 'editTaskForm').toArray()}) }}
+               {{ form_widget(form) }}
+               {{ form_end(form) }}
+           </div>
+        </template>
+    </turbo-stream>
+{% endblock %}
