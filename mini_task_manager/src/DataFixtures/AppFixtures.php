@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\DataFixtures\Seeder\UserSeeder;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -13,30 +14,19 @@ class AppFixtures extends Fixture
 
     private KernelInterface $kernel;
 
-    public function __construct(KernelInterface $kernel,private readonly UserPasswordHasherInterface $userPasswordHasher)
+    public function __construct(
+        KernelInterface $kernel,
+        protected  UserSeeder $userSeeder
+    )
     {
         $this->kernel = $kernel;
     }
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
         $env = $this->kernel->getEnvironment();
         // only seed data in dev environment
         if($env == 'dev'){
-            $totalUser = 3;
-            $defaultPassword = 'password';
-            $hashedPassword = $this->userPasswordHasher->hashPassword(
-                new User(),
-                $defaultPassword
-            );
-            for($i = 0; $i < $totalUser; $i++){
-                $user = new User();
-                $user->setEmail('user'.$i.'@test.com');
-                $user->setPassword($hashedPassword);
-                $manager->persist($user);
-            }
+            $this->userSeeder->seed($manager,5);
         }
-        $manager->flush();
     }
 }
