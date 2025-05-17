@@ -8,20 +8,20 @@
  - [x] Required symfony bunder
 - User Authentication Feature
  - [x] User can login
- - [ ] User can logout
+ - [x] User can logout
  - [x] Dummy User Seeder
  - [x] Middleware to prevent unauthenticated user to access protected route
 - Tasks Management
- - [ ] User can view their tasks
- - [ ] User can create a task
- - [ ] User can update a task
- - [ ] User can delete a task
+ - [x] User can view their tasks
+ - [x] User can create a task
+ - [x] User can update a task
+ - [x] User can delete a task
 ---
 ### Spend Time Detail
 - Setup: 1h
 - Research 4h
-- User Authentication Feature: 3h
+- User Authentication Feature: 4h
+- Task Feature : 11h
 ---
 ### Self Evaluation
-- Cannot finished project on expected time
-- Lack of Symfony Skill
+- Need to handle drag and drop
