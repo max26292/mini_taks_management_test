@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Task;
 use App\Entity\User;
 use App\Form\TaskNewTaskForm;
 use App\Repository\TaskRepository;
@@ -31,17 +32,26 @@ final class TaskController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        $form = $this->createForm(TaskNewTaskForm::class, null, [
+        $form = $this->createForm(TaskNewTaskForm::class, new Task(), [
             'action' => $this->generateUrl('tasks.store'),
         ]);
+        $emptyForm = clone $form;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $task = $repository->create($user,$form->getData());
-            //dd($request->getPreferredFormat());
+            if (TurboBundle::STREAM_FORMAT === $request->getPreferredFormat()) {
+                $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+
+                return $this->renderBlock('task/components/created_task.html.twig', 'success_stream', [
+                    'task' => $task,
+                    'form' => $emptyForm,
+                    'status' => $task->getStatus()
+                ]);
+            }
             //$request->setRequestFormat(TurboBundle::STREAM_FORMAT);
             //return;
-            return $this->redirectToRoute('app_dashboard');
+            return $this->redirectToRoute('app_dashboard', [], Response::HTTP_SEE_OTHER);
             // save...
 
             // do something

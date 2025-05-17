@@ -1,0 +1,26 @@
+{% block success_stream %}
+    <turbo-stream action="prepend" targets="#tasks_{{ status|slugify }}">
+        <template>
+            <div class="card my-3">
+                <div class="card-header">
+                    {{ task.title }}
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        {{ task.description }}
+                        <footer class="blockquote-footer mt-2">Created At {{ task.createdAt|date('Y-m-d H:i:s') }}</footer>
+                    </blockquote>
+                </div>
+            </div>
+        </template>
+    </turbo-stream>
+    <turbo-stream action="replace" targets="#new-task-body">
+        <template>
+            <turbo-frame id="new-task">
+                {{ form_start(form,{attr: stimulus_target('task', 'newTaskForm').toArray()}) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </turbo-frame>
+        </template>
+    </turbo-stream>
+{% endblock %}

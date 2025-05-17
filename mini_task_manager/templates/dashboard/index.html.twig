@@ -24,6 +24,7 @@
                             <div class="col-md-3 ">
                                 <turbo-frame id="BackLog" src="{{ path('tasks.list_tasks') }}" loading="lazy">
                                 </turbo-frame>
+
                             </div>
                             <div class="col-md-3 ">
                                 <turbo-frame id="In Process" src="{{ path('tasks.list_tasks') }}" loading="lazy">
@@ -49,9 +50,12 @@
                         <h5 class="modal-title">Modal title</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <turbo-frame id="new-task" src="{{ path('tasks.store') }}" loading="lazy">
-                        </turbo-frame>
+                    <div class="modal-body" >
+                        <div id="new-task-body">
+                            <turbo-frame id="new-task" src="{{ path('tasks.store') }}" loading="lazy">
+                            </turbo-frame>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" {{ stimulus_action('task', 'closeNewModal', 'click') }}>Close</button>

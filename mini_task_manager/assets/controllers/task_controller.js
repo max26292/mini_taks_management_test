@@ -30,7 +30,7 @@ export default class extends Controller {
     }
 
     submitNewModal() {
-        this.newTaskFormTarget.submit()
+        this.newTaskFormTarget.requestSubmit()
         this.closeNewModal()
     }
 
