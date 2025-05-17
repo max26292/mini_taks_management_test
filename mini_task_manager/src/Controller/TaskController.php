@@ -60,4 +60,13 @@ final class TaskController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/{id}', name: 'delete')]
+    public function delete($id, Request  $request,TaskRepository $repository){
+        $repository->delete($id);
+        $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+
+        return $this->renderBlock('task/components/deleted_task.html.twig', 'success_stream', [
+            'id' => $id,
+        ]);
+    }
 }

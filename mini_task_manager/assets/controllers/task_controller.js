@@ -34,4 +34,12 @@ export default class extends Controller {
         this.closeNewModal()
     }
 
+    deleteTask(event) {
+        console.log(event.target.parentNode)
+        if (confirm('Are you sure you want to delete this task?')) {
+            event.target.parentNode.requestSubmit()
+
+        }
+    }
+
 }

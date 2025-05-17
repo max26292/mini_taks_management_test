@@ -11,7 +11,6 @@ use Symfony\UX\Turbo\Attribute\Broadcast;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
-#[Broadcast]
 class Task
 {
     #[ORM\Id]

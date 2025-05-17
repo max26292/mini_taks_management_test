@@ -6,9 +6,18 @@
             </div>
             <div class="card-body d-flex flex-column" id="tasks_{{ status|slugify }}">
                 {% for task in tasks %}
-                    <div class="card my-3">
+                    <div class="card my-3" id="tasks_{{ task.id }}">
                         <div class="card-header">
                             {{ task.title }}
+                            <turbo-frame id="delete_task">
+                                <form action="{{ url('tasks.delete', { id: task.id }) }}" method="post" >
+                                    {# the argument of csrf_token() is an arbitrary string used to generate the token #}
+                                    <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}">
+
+                                    <button type="button" class="btn btn-outline-danger btn-sm" data-id="{{ task.id }}" {{ stimulus_action('task','deleteTask') }}>x</button>
+                                </form>
+                            </turbo-frame>
+
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">
