@@ -15,6 +15,15 @@ services:
       - PHP_VER=8.2
     networks:
       - app-network
+  mercure: 
+    image: dunglas/mercure
+    environment: 
+      - MERCURE_PUBLISHER_JWT_KEY=minitask
+      - MERCURE_SUBSCRIBER_JWT_KEY=minitask
+    ports:
+      - 8880:80
+      - 8844:443
+
 networks:
   app-network:
     name: workspace-network

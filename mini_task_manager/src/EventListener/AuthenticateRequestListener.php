@@ -41,7 +41,7 @@ final class AuthenticateRequestListener
         $request = $event->getRequest();
         $routeName = $request->attributes->get('_route');
         if($env == 'dev'){
-            if(!in_array($routeName, $this->publicRoute)){
+            if(in_array($routeName, $this->devRoute)){
                 return;
             }
         }

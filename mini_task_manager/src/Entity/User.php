@@ -41,6 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Task>
      */
     #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'user_id')]
+    #[ORM\OrderBy(['status'=>'Asc'])]
     private Collection $tasks;
 
     public function __construct()

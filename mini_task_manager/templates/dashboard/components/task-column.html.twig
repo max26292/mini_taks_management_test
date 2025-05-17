@@ -1,0 +1,25 @@
+<turbo-frame id="{{ status }}">
+
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">{{ status }}</h4>
+            </div>
+            <div class="card-body d-flex flex-column">
+                {% for task in tasks %}
+                    <div class="card my-3">
+                        <div class="card-header">
+                            {{ task.title }}
+                        </div>
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                {{ task.description }}
+                                <footer class="blockquote-footer">Created At {{ task.createdAt|date('Y-m-d H:i:s') }}</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+</turbo-frame>

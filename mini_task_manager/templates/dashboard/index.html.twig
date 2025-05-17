@@ -6,45 +6,31 @@
 {% endblock %}
 {% block body %}
 <div class="content-page">
-   <div class="container-fluid">
-       <div class="row gx-3">
-           <div class="col-md-3 ">
-               <div class="card">
-                   <div class="card-header">
-                       <h4 class="card-title">Status 1</h4>
-                   </div>
-                   <div class="card-body">
-                   </div>
-               </div>
-           </div>
-           <div class="col-md-3">
-               <div class="card">
-                   <div class="card-header">
-                       <h4 class="card-title">Status 1</h4>
-                   </div>
-                   <div class="card-body">
-                   </div>
-               </div>
-           </div>
-           <div class="col-md-3">
-               <div class="card">
-                   <div class="card-header">
-                       <h4 class="card-title">Status 1</h4>
-                   </div>
-                   <div class="card-body">
-                   </div>
-               </div>
-           </div>
-           <div class="col-md-3">
-               <div class="card">
-                   <div class="card-header">
-                       <h4 class="card-title">Status 1</h4>
-                   </div>
-                   <div class="card-body">
-                   </div>
-               </div>
-           </div>
-       </div>
-   </div>
-</div>
-{% endblock %}
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                Tasks
+            </div>
+            <div class="card-body">
+                <div class="row gx-3">
+                    <div class="col-md-3 ">
+                        <turbo-frame id="BackLog" src="{{ path('tasks.list_tasks') }}" loading="lazy">
+                        </turbo-frame>
+                    </div>
+                    <div class="col-md-3 ">
+                        <turbo-frame id="In Process" src="{{ path('tasks.list_tasks') }}" loading="lazy">
+                        </turbo-frame>
+                    </div>
+                    <div class="col-md-3 ">
+                        <turbo-frame id="Done" src="{{ path('tasks.list_tasks') }}" loading="lazy">
+                        </turbo-frame>
+                    </div>
+
+                    {#                  {{ include('dashboard/components/task-column.html.twig', {tasks: tasks | getTasksByStatus('BackLog'),status: 'BackLog'}) }} #}
+                    {#                  {{ include('dashboard/components/task-column.html.twig', {tasks: tasks | getTasksByStatus('In Process'),status: 'In Process'}) }} #}
+                    {#                  {{ include('dashboard/components/task-column.html.twig', {tasks: tasks | getTasksByStatus('Done'),status: 'Done'}) }} #}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
